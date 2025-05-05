@@ -1,0 +1,66 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+*.dll
+*.exe
+*.app
+*.log
+
+## VS files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+
+## Auto-generated files
+*.g.cs
+*.designer.cs
+*.AssemblyAttributes.cs
+
+## Test results
+TestResults/
+*.vspscc
+*.vspx
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## Rider / JetBrains IDEs
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.vscode/
+
+## VS performance & temp files
+*.pidb
+*.cache
+*.pdb
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+## DotNet-specific
+project.assets.json
+project.nuget.cache
+*.deps.json
+
+## Logs
+*.log
+
+## Windows-specific files
+Desktop.ini
+$RECYCLE.BIN/
+
+## Optional: hide publish folders
+publish/
+
+# Visual Studio local settings, caches, and index files
+.vs/
+*.vsidx
