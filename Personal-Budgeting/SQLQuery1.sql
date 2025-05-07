@@ -4,7 +4,7 @@ USE PersonalBudget;
 
 CREATE TABLE [User](
 	ID INT IDENTITY(1,1) PRIMARY KEY,
-	Username VARCHAR(50),
+	Username VARCHAR(50) UNIQUE,
 	[Password] VARCHAR(50),
 	Email VARCHAR(50)
 )

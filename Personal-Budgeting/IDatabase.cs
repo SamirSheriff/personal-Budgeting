@@ -11,16 +11,16 @@ namespace Personal_Budgeting
     {
         public void saveUser(string username, string email, string password);
 
-        public User loadUser(int id);
+        public User? loadUser(int id);
 
-        public void editUser(User altUser);
+        public SqlConnection GetConnection();
     }
 
     public class Database : IDatabase
     {
-        private string connectionstring;
+        private readonly string connectionstring;
 
-        Database(string cS)
+        public Database(string cS)
         {
             connectionstring = cS;
         }
@@ -35,7 +35,7 @@ namespace Personal_Budgeting
 
                     string sql = "INSERT INTO [USER]" +
                                  "(Username, [Password], Email) VALUES" +
-                                 "(@username, @email, @password");
+                                 "(@username, @email, @password";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("username", username);
@@ -55,7 +55,7 @@ namespace Personal_Budgeting
         }
 
 
-        public User loadUser(int id)
+        public User? loadUser(int id)
         {
             try
             {
@@ -183,7 +183,13 @@ namespace Personal_Budgeting
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return null;
             }
+        }
+
+        public SqlConnection GetConnection()
+        {
+            return new SqlConnection(connectionstring);
         }
     }
 

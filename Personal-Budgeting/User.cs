@@ -25,6 +25,9 @@ namespace Personal_Budgeting
             this.incomeManager = incomeManager;
             this.budgetManager = budgetManager;
             this.password = password;
+            expenseManager.owner = this;
+            budgetManager.owner = this;
+            incomeManager.owner = this;
         }
     }
 }
