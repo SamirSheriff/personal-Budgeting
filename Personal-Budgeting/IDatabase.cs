@@ -103,7 +103,7 @@ namespace Personal_Budgeting
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
 
-                            List<Budget> budgets = new List<Budget>;
+                            List<Budget> budgets = new List<Budget>();
                             while (reader.Read())
                             {
                                 int budgetID = reader.GetInt32(0);
@@ -130,7 +130,7 @@ namespace Personal_Budgeting
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
 
-                            List<Income> incomes = new List<Income>;
+                            List<Income> incomes = new List<Income>();
                             while (reader.Read())
                             {
                                 int incomeID = reader.GetInt32(0);
@@ -158,7 +158,7 @@ namespace Personal_Budgeting
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
 
-                            List<Expense> expenses = new List<Expense>;
+                            List<Expense> expenses = new List<Expense>();
                             while (reader.Read())
                             {
                                 int expenseID = reader.GetInt32(0);
