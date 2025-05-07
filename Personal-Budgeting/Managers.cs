@@ -132,7 +132,7 @@ namespace Personal_Budgeting
         }
     }
 
-    public class IncomeManager
+    public class IncomeManager : IManager
     {
         private readonly Database db;
         public User owner { get; set; }
@@ -204,7 +204,7 @@ namespace Personal_Budgeting
                             DateTime newreciveDate = reader.GetDateTime(3);
                             bool newisnonrecurring = reader.GetBoolean(4);
 
-                            incomes.Add(new Budget(incomeID, newamount, newreciveDate, newisnonrecurring));
+                            incomes.Add(new Income(incomeID, newamount, newreciveDate, newisnonrecurring));
                         }
                     }
 
@@ -237,11 +237,128 @@ namespace Personal_Budgeting
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("amount", amount);
-                    command.Parameters.AddWithValue("userid", owner.ID);
+                    command.Parameters.AddWithValue("incomeid", incomeid);
                     command.Parameters.AddWithValue("recievedate", recievedate);
                     command.Parameters.AddWithValue("isnonrecurring", isnonrecurring);
 
                     command.ExecuteNonQuery();
+
+                    command.ExecuteNonQuery();
+
+                }
+
+            }
+        }
+    }
+
+    public class ExpenseManager : IManager
+    {
+        private Database db;
+        public User owner {get; set;}
+        public List<Expense> expenses { get; private set;}
+
+        public ExpenseManager(List<Expense> expenses)
+        {
+            this.expenses = expenses;
+            db = new Database("Data Source=localhost;Initial Catalog=PersonalBudget;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+        }
+
+        public void deleteRecord(int id)
+        {
+            foreach (Expense expense in expenses)
+            {
+                if (expense.id == id)
+                {
+                    expenses.Remove(expense);
+                }
+            }
+
+            using (SqlConnection connection = db.GetConnection())
+            {
+                connection.Open();
+
+                string sql = "DELETE FROM Expense" +
+                             "WHERE expenseID = @id";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    command.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        public void addRecord(string category, double amount, bool isrecurring)
+        {
+            using (SqlConnection connection = db.GetConnection())
+            {
+                connection.Open();
+
+                string sql = "INSERT INTO Expense(userID, Category, Amount, isRecurring)" +
+                             "VALUES (@userid, @category, @amount, @isrecurring)";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("category", category);
+                    command.Parameters.AddWithValue("userid", owner.ID);
+                    command.Parameters.AddWithValue("amount", amount);
+                    command.Parameters.AddWithValue("isrecurring", isrecurring);
+
+                    command.ExecuteNonQuery();
+                }
+
+                expenses.Clear();
+                string sqlBudget = "SELECT * FROM Expense WHERE userID = @id";
+                using (SqlCommand command = new SqlCommand(sqlBudget, connection))
+                {
+                    command.Parameters.AddWithValue("id", owner.ID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int expenseID = reader.GetInt32(0);
+                            bool newisrecurring = reader.GetBoolean(4);
+                            double newamount = reader.GetDouble(3);
+                            string newcategory = reader.GetString(2);
+
+                            expenses.Add(new Expense(expenseID, newcategory, newamount, newisrecurring));
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+
+        public void editRecord(int expenseid, string category, double amount, bool isrecurring)
+        {
+            foreach (Expense expense in expenses)
+            {
+                if (expense.id == expenseid)
+                {
+                    expense.category = category;
+                    expense.amount = amount;
+                    expense.isRecurring = isrecurring;
+                }
+            }
+
+            using (SqlConnection connection = db.GetConnection())
+            {
+                connection.Open();
+
+                string sql = "UPDATE Expense" +
+                             "SET Category = @category, Amount = @amount, isRecurring = @isrecurring" +
+                             "WHERE expenseID = @expenseid";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("category", category);
+                    command.Parameters.AddWithValue("expenseid", expenseid);
+                    command.Parameters.AddWithValue("amount", amount);
+                    command.Parameters.AddWithValue("isrecurring", isrecurring);
 
                     command.ExecuteNonQuery();
 

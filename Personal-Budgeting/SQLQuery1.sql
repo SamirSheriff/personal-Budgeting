@@ -30,5 +30,5 @@ CREATE TABLE Budget(
 	userID INT REFERENCES [User](ID),
 	Limit FLOAT,
 	amountSpent FLOAT,
-	Category VARCHAR(50)
+	Category VARCHAR(50) UNIQUE
 )
