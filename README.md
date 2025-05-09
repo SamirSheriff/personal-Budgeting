@@ -9,7 +9,7 @@ read the ReadMe constantly to check for updates
 
 - User Story 3 (Tracking Income) ==> **finished**
 
-- User Story 4 (Budgeting & Analysis) ==> not finished
+- User Story 4 (Budgeting & Analysis) ==> **finished**
 
 - User Story 5 (Reminders) ==> not finished
 
