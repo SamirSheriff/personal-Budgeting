@@ -21,7 +21,7 @@ namespace Personal_Budgeting
 
         public AuthManager()
         {
-            database = new Database("Database database = new Database(\"Data Source = localhost; Initial Catalog = PersonalBudget; Integrated Security = True; Encrypt=True;Trust Server Certificate=True\");");
+            database = new Database("Data Source = localhost; Initial Catalog = PersonalBudget; Integrated Security = True; Encrypt=True;Trust Server Certificate=True");
         }
 
         public User login(string username, string password)

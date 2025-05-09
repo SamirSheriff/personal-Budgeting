@@ -29,20 +29,14 @@ namespace Personal_Budgeting
 
         public void deleteRecord(int id)
         {
-            foreach (Budget budget in budgets)
-            {
-                if (budget.id == id)
-                {
-                    budgets.Remove(budget);
-                }
-            }
+            budgets.RemoveAll(budget => budget.id == id);
 
             using (SqlConnection connection = db.GetConnection())
             {
                 connection.Open();
 
                 string sql = "DELETE FROM Budget" +
-                             "WHERE budgetID = @id";
+                             " WHERE budgetID = @id";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -60,7 +54,7 @@ namespace Personal_Budgeting
                 connection.Open();
 
                 string sql = "INSERT INTO Budget(userID, Limit, amountSpent, Category)" +
-                             "VALUES (@userid, @limit, @amountspent, @category)";
+                             " VALUES (@userid, @limit, @amountspent, @category)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -114,8 +108,8 @@ namespace Personal_Budgeting
                 connection.Open();
 
                 string sql = "UPDATE Budget" +
-                             "SET Limit = @limit, amountSpent = @amountspent, Category = @category" +
-                             "WHERE budgetID = @budgetid";
+                             " SET Limit = @limit, amountSpent = @amountspent, Category = @category" +
+                             " WHERE budgetID = @budgetid";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -146,20 +140,14 @@ namespace Personal_Budgeting
 
         public void deleteRecord(int id)
         {
-            foreach (Income income in incomes)
-            {
-                if (income.id == id)
-                {
-                    incomes.Remove(income);
-                }
-            }
+            incomes.RemoveAll(income => income.id == id);
 
             using (SqlConnection connection = db.GetConnection())
             {
                 connection.Open();
 
                 string sql = "DELETE FROM Income" +
-                             "WHERE incomeID = @id";
+                             " WHERE incomeID = @id";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -176,8 +164,8 @@ namespace Personal_Budgeting
             {
                 connection.Open();
 
-                string sql = "INSERT INTO Income(userID, Amount, isRecurring)" +
-                             "VALUES (@userid, @amount, @recievedate, @isnonrecurring)";
+                string sql = "INSERT INTO Income(userID, Amount, recieveDate, isNonRecurring)" +
+                             " VALUES (@userid, @amount, @recievedate, @isnonrecurring)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -231,8 +219,8 @@ namespace Personal_Budgeting
                 connection.Open();
 
                 string sql = "UPDATE Income" +
-                             "SET Amount = @amount, recieveDate = @recievedate, isNonRecurring = @isnonrecurring" +
-                             "WHERE incomeID = @incomeid";
+                             " SET Amount = @amount, recieveDate = @recievedate, isNonRecurring = @isnonrecurring" +
+                             " WHERE incomeID = @incomeid";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -265,20 +253,14 @@ namespace Personal_Budgeting
 
         public void deleteRecord(int id)
         {
-            foreach (Expense expense in expenses)
-            {
-                if (expense.id == id)
-                {
-                    expenses.Remove(expense);
-                }
-            }
+            expenses.RemoveAll(expense => expense.id == id);
 
             using (SqlConnection connection = db.GetConnection())
             {
                 connection.Open();
 
                 string sql = "DELETE FROM Expense" +
-                             "WHERE expenseID = @id";
+                             " WHERE expenseID = @id";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -296,7 +278,7 @@ namespace Personal_Budgeting
                 connection.Open();
 
                 string sql = "INSERT INTO Expense(userID, Category, Amount, isRecurring)" +
-                             "VALUES (@userid, @category, @amount, @isrecurring)";
+                             " VALUES (@userid, @category, @amount, @isrecurring)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -350,8 +332,8 @@ namespace Personal_Budgeting
                 connection.Open();
 
                 string sql = "UPDATE Expense" +
-                             "SET Category = @category, Amount = @amount, isRecurring = @isrecurring" +
-                             "WHERE expenseID = @expenseid";
+                             " SET Category = @category, Amount = @amount, isRecurring = @isrecurring" +
+                             " WHERE expenseID = @expenseid";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {

@@ -35,7 +35,7 @@ namespace Personal_Budgeting
 
                     string sql = "INSERT INTO [USER]" +
                                  "(Username, [Password], Email) VALUES" +
-                                 "(@username, @email, @password";
+                                 "(@username, @email, @password)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("username", username);

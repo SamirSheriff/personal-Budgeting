@@ -57,6 +57,7 @@ namespace Personal_Budgeting
                 }
 
                 authManager.signup(username, email, password);
+                loadeduser = authManager.login(username, password);
         }
 
         static void Login(){
@@ -94,10 +95,10 @@ namespace Personal_Budgeting
                 incomesPage();
             }
             else if(choice == "2"){
-                expensesPage();
+                budgetingPage();
             }
             else if(choice == "3"){
-                budgetingPage();
+                expensesPage();
             }
             else{
                 remainderPage();
