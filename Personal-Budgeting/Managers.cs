@@ -53,7 +53,7 @@ namespace Personal_Budgeting
             }
         }
 
-        public void addRecord(double limit, double amountSpent, double category)
+        public void addRecord(double limit, double amountSpent, string category)
         {
             using (SqlConnection connection = db.GetConnection())
             {

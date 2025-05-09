@@ -1,6 +1,11 @@
-﻿CREATE DATABASE PersonalBudget;
+﻿IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'PersonalBudget')
+BEGIN
+    CREATE DATABASE PersonalBudget;
+END
+GO
 
 USE PersonalBudget;
+GO
 
 CREATE TABLE [User](
 	ID INT IDENTITY(1,1) PRIMARY KEY,
