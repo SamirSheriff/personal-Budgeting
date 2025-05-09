@@ -40,9 +40,15 @@ namespace Personal_Budgeting
 
                     using (SqlDataReader reader = command.ExecuteReader()) 
                     {
-                        reader.Read();
-                        id = reader.GetInt32(0);
-                        realPassword = reader.GetString(1);
+                        if (reader.Read())
+                        {
+                            id = reader.GetInt32(0);
+                            realPassword = reader.GetString(1);
+                        }
+                        else
+                        {
+                            throw new Exception("User not found");
+                        }
                     }
                 }
             }

@@ -82,26 +82,38 @@ namespace Personal_Budgeting
             Console.WriteLine("               Home Page");
             Console.WriteLine("=====================================");
 
-            Console.WriteLine("1) Incomes Page       |       2) Budgeting Page        |       3) Expenses Page      |       4) Reminders Page");
+            Console.WriteLine(new string('-', 133));
+            Console.WriteLine(" 1) Incomes Page       |       2) Budgeting Page        |       3) Expenses Page      |       4) Reminders Page      |       5) Exit");
+            Console.WriteLine(new string('-', 133));
+
             Console.WriteLine("Enter the page number that you want to visit: ");
             string choice = Console.ReadLine();
 
-            while(choice != "1" && choice != "2" && choice != "3" && choice != "4"){
+            while(choice != "1" && choice != "2" && choice != "3" && choice != "4")
+            {
                 Console.WriteLine("Please, Enter a vaild choice (1, 2, 3 or 4): ");
                 choice = Console.ReadLine();
             }
 
-            if(choice == "1"){
+            if(choice == "1")
+            {
                 incomesPage();
             }
-            else if(choice == "2"){
+            else if(choice == "2")
+            {
                 budgetingPage();
             }
-            else if(choice == "3"){
+            else if(choice == "3")
+            {
                 expensesPage();
             }
-            else{
+            else if(choice == "4")
+            {
                 remainderPage();
+            }
+            else
+            {
+                Environment.Exit(0);
             }
 
             homePage();
@@ -114,46 +126,62 @@ namespace Personal_Budgeting
             Console.WriteLine("               Incomes");
             Console.WriteLine("=====================================");
 
-            Console.WriteLine("========  ========  ================  ============");
+            if(loadeduser.incomeManager.incomes.Count > 0)
+            {
+                Console.WriteLine("--------  --------  ----------------  --------------");
 
-            Console.WriteLine(
-            $"{ "ID".PadRight(8) } " +
-            $"{ "Amount".PadLeft(8) } " +
-            $"{ "Recieve Date".PadRight(16) } " +
-            $"{ "Nonrecurring".PadLeft(12) } ");
-
-            Console.WriteLine("========  ========  ================  ============");
-
-            foreach (var income in loadeduser.incomeManager.incomes){
                 Console.WriteLine(
-                $"{ income.id.ToString().PadRight(8) } " +
-                $"{ income.amount.ToString().PadLeft(8) } " +
-                $"{ income.recieveDate.ToString().PadRight(16) } " +
-                $"{ income.isNonRecurring.ToString().PadLeft(12) } ");
-            }
+                $"{ "ID".PadRight(8) }  " +
+                $"{ "Amount".PadLeft(8) }  " +
+                $"{ "Recieve Date".PadRight(16) }  " +
+                $"{ "Nonrecurring".PadRight(14) }");
 
-            Console.WriteLine(new string('-', 50));
+                Console.WriteLine("--------  --------  ----------------  --------------");
 
-            Console.WriteLine("What do you wnat to do ?");
-            Console.WriteLine("1) Add Income        |       2) Edit Inocme      |       3) Delete Income");
-            Console.Write("Enter you choice (1, 2, 3): ");
-            choice = Console.ReadLine();
+                foreach (var income in loadeduser.incomeManager.incomes)
+                {
+                    Console.WriteLine(
+                    $"{ income.id.ToString().PadRight(8) }  " +
+                    $"{ income.amount.ToString().PadLeft(8) }  " +
+                    $"{ income.recieveDate.ToString().Split(' ')[0].PadRight(16) }  " +
+                    $"{ income.isNonRecurring.ToString().PadRight(14) }");
+                }
 
-            while(choice != "1" && choice != "2" && choice != "3"){
-                Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                Console.WriteLine(new string('-', 52));
+
+                Console.WriteLine("\n");
+                Console.WriteLine(new string('-', 77));
+                Console.WriteLine(" 1) Add Income        |       2) Edit Inocme      |       3) Delete Income ");
+                Console.WriteLine(new string('-', 77));
+                Console.Write("Enter you choice (1, 2, 3): ");
                 choice = Console.ReadLine();
-            }
 
-            if(choice == "1"){
+                while(choice != "1" && choice != "2" && choice != "3")
+                {
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                    choice = Console.ReadLine();
+                }
+
+                if(choice == "1")
+                {
+                    addIncome();
+                }
+
+                else if(choice == "2")
+                {
+                    editIncome();
+                }
+                else
+                {
+                    removeIncome();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Add Income: ");
                 addIncome();
             }
 
-            else if(choice == "2"){
-                editIncome();
-            }
-            else{
-                removeIncome();
-            }
         }
 
         static void addIncome(){
@@ -234,45 +262,58 @@ namespace Personal_Budgeting
             Console.WriteLine("               Expenses");
             Console.WriteLine("=====================================");
 
-            Console.WriteLine("========  ========  ====================  ============");
-
-            Console.WriteLine(
-            $"{ "ID".PadRight(8) } " +
-            $"{ "Amount".PadLeft(8) } " +
-            $"{ "category".PadRight(20) } " +
-            $"{ "Recurring".PadLeft(12) } ");
-
-            Console.WriteLine("========  ========  ====================  ============");
-
-            foreach (var expense in loadeduser.expenseManager.expenses){
+            if (loadeduser.expenseManager.expenses.Count > 0)
+            {
+                Console.WriteLine("--------  --------  --------------------  ------------");
                 Console.WriteLine(
-                $"{ expense.id.ToString().PadRight(8) } " +
-                $"{ expense.amount.ToString().PadLeft(8) } " +
-                $"{ expense.category.PadRight(20) } " +
-                $"{ expense.isRecurring.ToString().PadLeft(12) } ");
+                $"{ "ID".PadRight(8) }  " +
+                $"{ "Amount".PadLeft(8) }  " +
+                $"{ "category".PadRight(20) }  " +
+                $"{ "Recurring".PadLeft(12) }");
+
+                Console.WriteLine("--------  --------  --------------------  ------------");                
+
+                foreach (var expense in loadeduser.expenseManager.expenses){
+                    Console.WriteLine(
+                    $"{ expense.id.ToString().PadRight(8) }  " +
+                    $"{ expense.amount.ToString().PadLeft(8) }  " +
+                    $"{ expense.category.PadRight(20) }  " +
+                    $"{ expense.isRecurring.ToString().PadLeft(12) }");
+                }
+
+                Console.WriteLine(new string('-', 54));
+
+                Console.WriteLine("\n");
+                Console.WriteLine(new string('-', 80));
+                Console.WriteLine(" 1) Add expense        |       2) Edit expense      |       3) Delete expense ");
+                Console.WriteLine(new string('-', 80));
+                Console.Write("Enter you choice (1, 2, 3): ");
+                string choice = Console.ReadLine();
+
+                while(choice != "1" && choice != "2" && choice != "3")
+                {
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                    choice = Console.ReadLine();
+                }
+
+                if(choice == "1")
+                {
+                    addExpense();
+                }
+
+                else if(choice == "2")
+                {
+                    editExpense();
+                }
+                else
+                {
+                    removeExpense();
+                }
             }
-
-            Console.WriteLine(new string('-', 54));
-
-            Console.WriteLine("What do you wnat to do ?");
-            Console.WriteLine("1) Add expense        |       2) Edit expense      |       3) Delete expense");
-            Console.Write("Enter you choice (1, 2, 3): ");
-            string choice = Console.ReadLine();
-
-            while(choice != "1" && choice != "2" && choice != "3"){
-                Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
-                choice = Console.ReadLine();
-            }
-
-            if(choice == "1"){
+            else
+            {
+                Console.WriteLine("Add expense:");
                 addExpense();
-            }
-
-            else if(choice == "2"){
-                editExpense();
-            }
-            else{
-                removeExpense();
             }
         }
 
@@ -316,7 +357,8 @@ namespace Personal_Budgeting
             {
                 Console.Write("Invalid input. Please enter a valid number for amount: ");
             }
-
+            
+            Console.Write("Enter the category: ");
             category = Console.ReadLine();
 
             Console.Write("Is this expense Recurring ? (true/false): ");
@@ -345,45 +387,59 @@ namespace Personal_Budgeting
             Console.WriteLine("               Budgeting");
             Console.WriteLine("=====================================");
 
-            Console.WriteLine("========  ==========  ==========  ====================");
+            if (loadeduser.budgetManager.budgets.Count > 0)
+            {
+                Console.WriteLine("--------  ----------  ------------------  --------------------");
 
-            Console.WriteLine(
-            $"{ "ID".PadRight(8) } " +
-            $"{ "Limit".PadLeft(10) } " +
-            $"{ "Spending Amount".PadLeft(10) } " +
-            $"{ "category".PadRight(20) } ");
-
-            Console.WriteLine("========  ==========  ==========  ====================");
-
-            foreach (var budget in loadeduser.budgetManager.budgets){
                 Console.WriteLine(
-                $"{ budget.id.ToString().PadRight(8) } " +
-                $"{ budget.limit.ToString().PadLeft(10) } " +
-                $"{ budget.amountSpent.ToString().PadRight(10) } " +
-                $"{ budget.category.PadLeft(20) } ");
+                $"{ "ID".PadRight(8) }  " +
+                $"{ "Limit".PadRight(10) }  " +
+                $"{ "Spending Amount".PadRight(18) }  " +
+                $"{ "category".PadRight(20) }");
+
+                Console.WriteLine("--------  ----------  ------------------  --------------------");
+
+                foreach (var budget in loadeduser.budgetManager.budgets){
+                    Console.WriteLine(
+                    $"{ budget.id.ToString().PadRight(8) }  " +
+                    $"{ budget.limit.ToString().PadRight(10) }  " +
+                    $"{ budget.amountSpent.ToString().PadRight(18) }  " +
+                    $"{ budget.category.PadRight(20) }");
+                }
+
+                Console.WriteLine(new string('-', 54));
+
+                //Console.WriteLine("What do you wnat to do ?");
+                Console.WriteLine(new string('-', 75));
+                Console.WriteLine(" 1) Add budget        |       2) Edit budget      |       3) Delete budget ");
+                Console.WriteLine(new string('-', 75));
+                Console.Write("Enter your choice (1, 2, 3): ");
+                string choice = Console.ReadLine();
+
+                while(choice != "1" && choice != "2" && choice != "3")
+                {
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                    choice = Console.ReadLine();
+                }
+
+                if(choice == "1")
+                {
+                    addBudget();
+                }
+
+                else if(choice == "2")
+                {
+                    editBudget();
+                }
+                else
+                {
+                    removeBudget();
+                }
             }
-
-            Console.WriteLine(new string('-', 54));
-
-            Console.WriteLine("What do you wnat to do ?");
-            Console.WriteLine("1) Add budget        |       2) Edit budget      |       3) Delete budget");
-            Console.Write("Enter you choice (1, 2, 3): ");
-            string choice = Console.ReadLine();
-
-            while(choice != "1" && choice != "2" && choice != "3"){
-                Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
-                choice = Console.ReadLine();
-            }
-
-            if(choice == "1"){
+            else 
+            {
+                Console.WriteLine("Add budget:");
                 addBudget();
-            }
-
-            else if(choice == "2"){
-                editBudget();
-            }
-            else{
-                removeBudget();
             }
         }
 
@@ -404,6 +460,7 @@ namespace Personal_Budgeting
                 Console.Write("Invalid input. Please enter a valid number for amount: ");
             }
 
+            Console.Write("Enter the category: ");
             category = Console.ReadLine();
 
             loadeduser.budgetManager.addRecord(limit, amountSpent, category);
@@ -433,6 +490,7 @@ namespace Personal_Budgeting
                 Console.Write("Invalid input. Please enter a valid number for spending amount: ");
             }
 
+            Console.Write("Enter the category: ");
             category = Console.ReadLine();
 
             loadeduser.budgetManager.editRecord(id, limit, amountSpent, category);
@@ -455,7 +513,7 @@ namespace Personal_Budgeting
             Console.WriteLine("               Remainders");
             Console.WriteLine("=====================================");
 
-                        
+            
         }
     }
 }
