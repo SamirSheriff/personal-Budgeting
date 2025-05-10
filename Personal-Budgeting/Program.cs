@@ -86,6 +86,23 @@ namespace Personal_Budgeting
             Console.WriteLine("               Home Page");
             Console.WriteLine("=====================================");
 
+            if (loadeduser.reminderManager.reminders.Count > 0)
+            {
+                DateTime today = DateTime.Today;
+                foreach (var reminder in loadeduser.reminderManager.reminders)
+                {
+                    TimeSpan difference = reminder.occurence - today;
+                    if(Math.Abs(difference.TotalDays) < 3)
+                    {
+                        Console.WriteLine($"Reminder ID: {reminder.id}\n" +
+                                        $"Expense ID: {reminder.expenseID}\n" +
+                                $"Deadline: {reminder.occurence.ToString().Split(' ')[0]}");
+
+                        Console.WriteLine("------------------------------------------------------------------------------------");
+                    }
+                }
+            }
+
             Console.WriteLine(new string('-', 133));
             Console.WriteLine(" 1) Incomes Page       |       2) Budgeting Page        |       3) Expenses Page      |       4) Reminders Page      |       5) Exit");
             Console.WriteLine(new string('-', 133));
@@ -93,9 +110,9 @@ namespace Personal_Budgeting
             Console.WriteLine("Enter the page number that you want to visit: ");
             string choice = Console.ReadLine();
 
-            while(choice != "1" && choice != "2" && choice != "3" && choice != "4")
+            while(choice != "1" && choice != "2" && choice != "3" && choice != "4" && choice != "5")
             {
-                Console.WriteLine("Please, Enter a vaild choice (1, 2, 3 or 4): ");
+                Console.WriteLine("Please, Enter a vaild choice (1, 2, 3, 4 or 5): ");
                 choice = Console.ReadLine();
             }
 
@@ -154,15 +171,15 @@ namespace Personal_Budgeting
                 Console.WriteLine(new string('-', 52));
 
                 Console.WriteLine("\n");
-                Console.WriteLine(new string('-', 77));
-                Console.WriteLine(" 1) Add Income        |       2) Edit Inocme      |       3) Delete Income ");
-                Console.WriteLine(new string('-', 77));
-                Console.Write("Enter you choice (1, 2, 3): ");
+                Console.WriteLine(new string('-', 97));
+                Console.WriteLine(" 1) Add Income        |       2) Edit Inocme      |       3) Delete Income      |      4) Return");
+                Console.WriteLine(new string('-', 97));
+                Console.Write("Enter you choice (1, 2, 3, 4): ");
                 choice = Console.ReadLine();
 
-                while(choice != "1" && choice != "2" && choice != "3")
+                while(choice != "1" && choice != "2" && choice != "3" && choice != "4")
                 {
-                    Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2, 3 or 4): ");
                     choice = Console.ReadLine();
                 }
 
@@ -175,9 +192,13 @@ namespace Personal_Budgeting
                 {
                     editIncome();
                 }
-                else
+                else if(choice == "3")
                 {
                     removeIncome();
+                }
+                else
+                {
+                    return;
                 }
             }
             else
@@ -288,15 +309,15 @@ namespace Personal_Budgeting
                 Console.WriteLine(new string('-', 54));
 
                 Console.WriteLine("\n");
-                Console.WriteLine(new string('-', 80));
-                Console.WriteLine(" 1) Add expense        |       2) Edit expense      |       3) Delete expense ");
-                Console.WriteLine(new string('-', 80));
-                Console.Write("Enter you choice (1, 2, 3): ");
+                Console.WriteLine(new string('-', 100));
+                Console.WriteLine(" 1) Add expense        |       2) Edit expense      |       3) Delete expense       |      4) Return");
+                Console.WriteLine(new string('-', 100));
+                Console.Write("Enter you choice (1, 2, 3 or 4): ");
                 string choice = Console.ReadLine();
 
-                while(choice != "1" && choice != "2" && choice != "3")
+                while(choice != "1" && choice != "2" && choice != "3" && choice != "4")
                 {
-                    Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2, 3 or 4): ");
                     choice = Console.ReadLine();
                 }
 
@@ -304,14 +325,17 @@ namespace Personal_Budgeting
                 {
                     addExpense();
                 }
-
                 else if(choice == "2")
                 {
                     editExpense();
                 }
-                else
+                else if(choice == "3")
                 {
                     removeExpense();
+                }
+                else
+                {
+                    return;
                 }
             }
             else
@@ -413,16 +437,15 @@ namespace Personal_Budgeting
 
                 Console.WriteLine(new string('-', 54));
 
-                //Console.WriteLine("What do you wnat to do ?");
-                Console.WriteLine(new string('-', 75));
-                Console.WriteLine(" 1) Add budget        |       2) Edit budget      |       3) Delete budget ");
-                Console.WriteLine(new string('-', 75));
-                Console.Write("Enter your choice (1, 2, 3): ");
+                Console.WriteLine(new string('-', 95));
+                Console.WriteLine(" 1) Add budget        |       2) Edit budget      |       3) Delete budget      |      4) Return");
+                Console.WriteLine(new string('-', 95));
+                Console.Write("Enter your choice (1, 2, 3 or 4): ");
                 string choice = Console.ReadLine();
 
-                while(choice != "1" && choice != "2" && choice != "3")
+                while(choice != "1" && choice != "2" && choice != "3" && choice != "4")
                 {
-                    Console.WriteLine("Please, Enter a vaild choice (1, 2 or 3): ");
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2, 3 or 4): ");
                     choice = Console.ReadLine();
                 }
 
@@ -435,9 +458,13 @@ namespace Personal_Budgeting
                 {
                     editBudget();
                 }
-                else
+                else if(choice == "3")
                 {
                     removeBudget();
+                }
+                else
+                {
+                    return;
                 }
             }
             else 
@@ -517,7 +544,119 @@ namespace Personal_Budgeting
             Console.WriteLine("               Remainders");
             Console.WriteLine("=====================================");
 
+            if (loadeduser.reminderManager.reminders.Count > 0)
+            {
+                foreach (var reminder in loadeduser.reminderManager.reminders)
+                {    
+                    Console.WriteLine($"Reminder ID: {reminder.id}\n" +
+                                    $"Expense ID: {reminder.expenseID}\n" +
+                                $"Deadline: {reminder.occurence.ToString().Split(' ')[0]}");
+                    Console.WriteLine("------------------------------------------------------------------------------------");
+                }
             
+                Console.WriteLine(new string('-', 102));
+                Console.WriteLine(" 1) Add Reminder      |       2) Edit Reminder      |       3) Delete Reminder      |      4) Return");
+                Console.WriteLine(new string('-', 102));
+                Console.Write("Enter your choice (1, 2, 3 or 4): ");
+                string choice = Console.ReadLine();
+
+                while(choice != "1" && choice != "2" && choice != "3" && choice != "4")
+                {
+                    Console.WriteLine("Please, Enter a vaild choice (1, 2, 3 or 4): ");
+                    choice = Console.ReadLine();
+                }
+
+                if(choice == "1")
+                {
+                    addReminder();
+                }
+                else if(choice == "2")
+                {
+                    editReminder();
+                }
+                else if(choice == "3")
+                {
+                    removeReminder();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else 
+            {
+                Console.WriteLine("Add Reminder:");
+                addReminder();
+            }
+        }
+
+        static void addReminder()
+        {
+            if(loadeduser.expenseManager.expenses.Count == 0)
+            {
+                Console.WriteLine("No expenses added yet");
+                Console.WriteLine("Go to expenses page to add expense");
+                return;
+            }
+
+            int expenseid;
+            DateTime deadline;
+
+            Console.Write("Enter the expense id that you want to set reminder: ");
+            while (!int.TryParse(Console.ReadLine(), out expenseid))
+            {
+                Console.Write("Invalid input. Please enter a valid integer for expense id: ");
+            }
+
+            foreach (var reminder in loadeduser.reminderManager.reminders)
+            {
+                if(reminder.expenseID == expenseid)
+                {
+                    Console.WriteLine("this reminder is already exists");
+                    return;
+                }
+            }
+            
+            Console.WriteLine("Enter the deadline (e.g. yyyy-MM-dd): ");
+            while (!DateTime.TryParse(Console.ReadLine(), out deadline))
+            {
+                Console.Write("Invalid input. Please enter a valid date (e.g. yyyy-MM-dd): ");
+            }
+
+            loadeduser.reminderManager.addRecord(expenseid, deadline);
+        }
+
+        static void editReminder()
+        {
+            int reminderid;
+            DateTime newDeadline;
+
+            Console.Write("Enter the reminder id that you want to change: ");
+            while (!int.TryParse(Console.ReadLine(), out reminderid))
+            {
+                Console.Write("Invalid input. Please enter a valid integer for expense id: ");
+            }
+            
+            Console.WriteLine("Enter the deadline (e.g. yyyy-MM-dd): ");
+            while (!DateTime.TryParse(Console.ReadLine(), out newDeadline))
+            {
+                Console.Write("Invalid input. Please enter a valid date (e.g. yyyy-MM-dd): ");
+            }
+
+            loadeduser.reminderManager.addRecord(reminderid, newDeadline);
+        }
+
+        static void removeReminder()
+        {
+            int id;
+
+            Console.Write("Enter the reminder id that you want to delete: ");
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.Write("Invalid input. Please enter a valid integer for expense id: ");
+            }
+
+            loadeduser.reminderManager.deleteRecord(id);
         }
     }
 }
