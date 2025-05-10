@@ -54,4 +54,19 @@ namespace Personal_Budgeting
             this.amountSpent = amountSpent;
         }
     }
+
+    public class Reminder
+    {
+        public int id {get; private set;}
+        public DateTime occurence {get; set;}
+        public int expenseID {get; private set;}
+
+        public Reminder(int id, int expenseid, DateTime dateTime)
+        {
+            this.id = id;
+            expenseID = expenseid;
+            occurence = dateTime;
+        }
+
+    }
 }

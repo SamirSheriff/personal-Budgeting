@@ -37,3 +37,10 @@ CREATE TABLE Budget(
 	amountSpent FLOAT,
 	Category VARCHAR(50) UNIQUE
 )
+
+CREATE TABLE Reminder(
+	reminderID INT IDENTITY(1,1) PRIMARY KEY,
+	userID INT REFERENCES [User](ID),
+	expenseID INT REFERENCES Expense(expenseID),
+	Ocurrence DATETIME,
+)

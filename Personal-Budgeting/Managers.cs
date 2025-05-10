@@ -349,4 +349,110 @@ namespace Personal_Budgeting
             }
         }
     }
+
+
+    public class ReminderManager : IManager
+    {
+        private Database db;
+        public User owner {get; set;}
+        public List<Reminder> reminders { get; private set;}
+
+        public ReminderManager(List<Reminder> reminders)
+        {
+            this.reminders = reminders;
+            db = new Database("Data Source=localhost;Initial Catalog=PersonalBudget;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+        }
+
+        public void deleteRecord(int id)
+        {
+            reminders.RemoveAll(reminder => reminder.id == id);
+
+            using (SqlConnection connection = db.GetConnection())
+            {
+                connection.Open();
+
+                string sql = "DELETE FROM Reminder" +
+                             " WHERE reminderID = @id";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    command.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        public void addRecord(int expenseid, DateTime ocurrence)
+        {
+            using (SqlConnection connection = db.GetConnection())
+            {
+                connection.Open();
+
+                string sql = "INSERT INTO Reminder(userID, expenseID, Ocurrence)" +
+                             " VALUES (@userid, @expenseID, @Ocurrence)";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("expenseID", expenseid);
+                    command.Parameters.AddWithValue("userid", owner.ID);
+                    command.Parameters.AddWithValue("Ocurrence", ocurrence);
+
+                    command.ExecuteNonQuery();
+                }
+
+                reminders.Clear();
+                string sqlBudget = "SELECT * FROM Reminder WHERE userID = @id";
+                using (SqlCommand command = new SqlCommand(sqlBudget, connection))
+                {
+                    command.Parameters.AddWithValue("id", owner.ID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int reminderID = reader.GetInt32(0);
+                            int expenseID = reader.GetInt32(2);
+                            DateTime dateTime = reader.GetDateTime(3);
+
+                            reminders.Add(new Reminder(reminderID, expenseID, dateTime));
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+
+        public void editRecord(int reminderid, DateTime newOcurrence)
+        {
+            foreach (Reminder reminder in reminders)
+            {
+                if (reminder.id == reminderid)
+                {
+                    reminder.occurence = newOcurrence;
+                }
+            }
+
+            using (SqlConnection connection = db.GetConnection())
+            {
+                connection.Open();
+
+                string sql = "UPDATE Reminder" +
+                             " SET Ocurrence = @newOcurrence" +
+                             " WHERE reminderID = @reminderid";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("reminderid", reminderid);
+                    command.Parameters.AddWithValue("newOcurrence", newOcurrence);
+
+                    command.ExecuteNonQuery();
+
+                }
+
+            }
+        }
+    }
 }

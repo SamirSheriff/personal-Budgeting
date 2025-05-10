@@ -1,5 +1,9 @@
 namespace Personal_Budgeting
 {
+    //Each Reminder is connected to a certain expense
+    //When adding a new reminder, the user is presented with a list of expenses to choose which one
+    //Every time the user loads the main menu the program checks if there are any reminders whose time is now
+    //If there are, a notification is presented in the main menu
     internal static class Program
     {
         static User loadeduser;

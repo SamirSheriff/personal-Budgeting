@@ -175,7 +175,34 @@ namespace Personal_Budgeting
 
                     }
 
-                    return new User(id, username, email, expenseManager, incomeManager, budgetManager, password);
+
+                    string sqlReminder = "SELECT * FROM Reminder WHERE userID = @id";
+
+                    ReminderManager reminderManager;
+                    using (SqlCommand command = new SqlCommand(sqlReminder, connection))
+                    {
+                        command.Parameters.AddWithValue("id", id);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            List<Reminder> reminders = new List<Reminder>();
+                            while (reader.Read())
+                            {
+                                int reminderID = reader.GetInt32(0);
+                                int expenseID = reader.GetInt32(2);
+                                DateTime dateTime = reader.GetDateTime(3);
+
+                                reminders.Add(new Reminder(reminderID, expenseID, dateTime));
+                            }
+
+                            reminderManager = new ReminderManager(reminders);
+                        }
+
+
+                    }
+
+                    return new User(id, username, email, expenseManager, incomeManager, budgetManager, reminderManager, password);
 
                 }
             }
