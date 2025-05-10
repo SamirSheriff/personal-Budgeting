@@ -11,7 +11,7 @@ read the ReadMe constantly to check for updates
 
 - User Story 4 (Budgeting & Analysis) ==> **finished**
 
-- User Story 5 (Reminders) ==> not finished
+- User Story 5 (Reminders) ==> **finished**
 
 - User Story 7 (Expense Tracking) ==> **finished**
 
